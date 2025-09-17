@@ -6,9 +6,13 @@ import "dotenv/config";
 import passpport from "passport";
 import session from "express-session";
 import bcrypt from "bcrypt";
-import { DataTypes,Sequelize } from "sequelize";
+import { Sequelize } from "sequelize";
 import connectSessionSquelize from "connect-session-sequelize";
 const SequelizeStore = connectSessionSquelize(session.Store);
+import { sequelize, Employee, Department, Role, Salary } from './models/index.js';
+
+
+
 
 //middleware
 const jsonParser = bodyParser.json();
@@ -21,7 +25,7 @@ const urlencodedParser =bodyParser.urlencoded({
 import LocalStrategy from "passport-local";
 
 
-const sequelize = new Sequelize(process.env.DATABASE_URL,{
+/*const sequelize = new Sequelize(process.env.DATABASE_URL,{
     dialect:'postgres',
     dialectOptions:{
         ssl:{
@@ -29,14 +33,12 @@ const sequelize = new Sequelize(process.env.DATABASE_URL,{
             rejectUnauthorized:false //this i important for self-signed certificates
         },
     },
-});
+}); */
+
+
 console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
-/// CREATE  MODELS
 
-
-
-///MODEL RELATIONSHIPS
 
 
 

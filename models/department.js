@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-const sequelize = require('../db');
+import sequelize from '../db/db.js';
 
 const Department = sequelize.define(
     'Department', {
@@ -33,4 +33,5 @@ const Department = sequelize.define(
     }
 );
 
-module.exports = Department;
+
+export default Department;

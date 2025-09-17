@@ -1,6 +1,5 @@
-import { type } from "os";
 import { DataTypes } from "sequelize";
-const sequelize = require('../db');
+import sequelize from '../db/db.js';
 
 
 const Salary = sequelize.define(
@@ -33,4 +32,4 @@ const Salary = sequelize.define(
         timestamps:false,
     });
 
-    module.exports = Salary;
+    export default Salary;

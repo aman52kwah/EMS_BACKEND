@@ -1,5 +1,7 @@
 import { Sequelize } from "sequelize";
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 async function setupDatabase() {
     const sequelize = new Sequelize(process.env.DATABASE_URL,{
@@ -27,3 +29,4 @@ async function setupDatabase() {
 }
 
 setupDatabase();
+

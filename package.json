@@ -1,4 +1,10 @@
 {
+	"scripts": {
+		"start": "nodemon ems.js",
+		"type": "module"
+	},
+
+	
 	"dependencies": {
 		"bcrypt": "^6.0.0",
 		"body-parser": "^2.2.0",

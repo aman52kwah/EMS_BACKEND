@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-const sequelize = require('../db');
+import sequelize from '../db/db.js';
 
 
 const Employee = sequelize.define(
@@ -43,4 +43,4 @@ const Employee = sequelize.define(
 
 
 
-module.exports = Employee;
+export default Employee;
