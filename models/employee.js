@@ -1,8 +1,15 @@
 import { DataTypes } from "sequelize";
-import sequelize from '../db/db.js';
+import { sequelize as sequelizePromise } from '../db/db.js';
 
+async function defineEmployee(){
 
-const Employee = sequelize.define(
+    const sequelize = await sequelizePromise;
+    if (!sequelize) {
+        throw new Error("Sequelize instance is undefined. Check db.js configuration.");
+        
+    }
+
+    const Employee = sequelize.define(
     'Employee',
     {
         id:{
@@ -40,7 +47,12 @@ const Employee = sequelize.define(
         timestamps:false,
     }
 );
+return Employee;
+}
 
 
+const EmployeePromise = defineEmployee().catch((error)=>{
+    console.error('Failed to define Employee model:', error)
+});
 
-export default Employee;
+export {EmployeePromise as Employee};

@@ -1,9 +1,17 @@
 
-import sequelize from '../db/db.js';
-import Employee from './employee.js';
-import Department from './department.js';
-import Role from './role.js';
-import Salary from './salary.js';
+import { sequelize as sequelizePromise } from '../db/db.js';
+import { Employee as EmployeePromise } from './employee.js';
+import { Department as DepartmentPromise } from './department.js';
+import { Role as RolePromise } from './role.js';
+import { Salary as SalaryPromise } from './salary.js';
+
+
+async function initializeModels() {
+    const sequelize = await sequelizePromise;
+    const Employee = await EmployeePromise;
+    const Department = await DepartmentPromise;
+    const Role = await RolePromise;
+    const Salary = await SalaryPromise;
 
 
 //DEFINE ASSOCIATIONS
@@ -25,4 +33,15 @@ Role.hasMany(Employee, { foreignKey: "role_id", as: "employees" });
 Employee.hasMany(Salary, { foreignKey: "employee_id", as: "salaries" });
 Salary.belongsTo(Employee, { foreignKey: "employee_id", as: "employee" });
 
-export {sequelize, Employee, Department, Role, Salary};
+
+// Sync models with the database
+await sequelize.sync({ alter: true });
+    console.log('Models synchronized with the database.');
+
+
+return  {sequelize, Employee, Department, Role, Salary};
+}
+
+const modelsPromise = initializeModels();
+
+export { modelsPromise };

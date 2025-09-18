@@ -1,8 +1,13 @@
 import { DataTypes } from "sequelize";
-import sequelize from '../db/db.js';
+import { sequelize as sequelizePromise } from '../db/db.js';
 
+async function defineRole() {
+    const sequelize = await sequelizePromise;
+    if (!sequelize) {
+        throw new Error('Sequelize instance is undefined. Check db.js configuration.');
+    }
 
-const Role = sequelize.define(
+    const Role = sequelize.define(
     'Role', {
         id:{
             type:DataTypes.UUID,
@@ -32,5 +37,11 @@ const Role = sequelize.define(
         timestamps:false,
     }
 );
+return Role;
+}
 
-export default Role;
+const RolePromise = defineRole().catch((error) => {
+    console.error('Failed to define Role model:', error);
+    throw error;
+});
+export {RolePromise as Role};

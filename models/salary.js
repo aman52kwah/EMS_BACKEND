@@ -1,8 +1,16 @@
 import { DataTypes } from "sequelize";
-import sequelize from '../db/db.js';
+import { sequelize as sequelizePromise } from '../db/db.js';
 
 
-const Salary = sequelize.define(
+
+
+async function defineSalary(){
+    const sequelize = await sequelizePromise;
+    if (!sequelize) {
+        throw new Error('Sequelize instance is undefined. Check db.js configuration.');
+        
+    }
+    const Salary = sequelize.define(
     'Salary',{
         id:{
             type:DataTypes.UUID,
@@ -31,5 +39,11 @@ const Salary = sequelize.define(
         tableName:'salary',
         timestamps:false,
     });
+    return Salary;
+}
 
-    export default Salary;
+
+    const SalaryPromise = defineSalary().catch((error)=>{
+        console.error('Failed to define Salary model:', error)
+    });
+    export {SalaryPromise as Salary};

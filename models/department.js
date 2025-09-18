@@ -1,11 +1,20 @@
 import { DataTypes } from "sequelize";
-import sequelize from '../db/db.js';
 
-const Department = sequelize.define(
+import { sequelize as sequelizePromise } from '../db/db.js';
+
+
+
+async function defineDepartment(){
+    const sequelize = await sequelizePromise;
+    if (!sequelize) {
+        throw new Error('Sequelize instance is undefined. Check db.js configuration.');
+    }
+    const Department = sequelize.define(
     'Department', {
         id:{
             type:DataTypes.UUID,
             primaryKey:true,
+            defaultValue:DataTypes.UUIDV4
         },
         name:{
             type:DataTypes.STRING,
@@ -28,10 +37,16 @@ const Department = sequelize.define(
         },
     },
     {
-        tablename: 'departments',
+        tableName: 'departments',
         timestamps:false,
-    }
-);
+    });
+    return Department;
+}
 
 
-export default Department;
+const DepartmentPromise = defineDepartment().catch((error) => {
+    console.error('Failed to define Department model:', error);
+    throw error;
+});
+
+export { DepartmentPromise as Department };
