@@ -24,6 +24,11 @@ async function defineSalary(){
             type:DataTypes.DECIMAL(10,2), // for currency( 100.50)
             allowNull:false,
         },
+        currency: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                defaultValue: 'USD',
+            },
         effective_date:{
             type:DataTypes.DATE,
             allowNull:false,

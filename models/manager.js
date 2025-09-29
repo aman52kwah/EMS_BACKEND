@@ -4,13 +4,13 @@ import { sequelize as sequelizePromise } from '../db/db.js';
 
 
 
-async function defineDepartment(){
+async function defineManager(){
     const sequelize = await sequelizePromise;
     if (!sequelize) {
         throw new Error('Sequelize instance is undefined. Check db.js configuration.');
     }
-    const Department = sequelize.define(
-    'Department', {
+    const Manager = sequelize.define(
+    'Manager', {
         id:{
             type:DataTypes.UUID,
             primaryKey:true,
@@ -19,17 +19,18 @@ async function defineDepartment(){
         name:{
             type:DataTypes.STRING,
             allowNull:false,
-            unique:true,
         },
-        description:{
-            type:DataTypes.STRING,
-            allowNull:true,
+        email: { 
+                type: DataTypes.STRING,
+                allowNull: true,
+                unique: true,
+                validate: {isEmail: true},
+            },
+        
+        department_id:{
+            type:DataTypes.UUID,
+            allowNull:true,// Manager might not be assigned to department initially
         },
-        // manager_id:{
-        //     type:DataTypes.UUID,
-        //     allowNull:true,// Manager might not be assigned yet
-        // },
-
         created_at:{
             type:DataTypes.DATE,
             allowNull:false,
@@ -37,16 +38,16 @@ async function defineDepartment(){
         },
     },
     {
-        tableName: 'departments',
+        tableName: 'managers',
         timestamps:false,
     });
-    return Department;
+    return Manager;
 }
 
 
-const DepartmentPromise = defineDepartment().catch((error) => {
-    console.error('Failed to define Department model:', error);
+const ManagerPromise = defineManager().catch((error) => {
+    console.error('Failed to define Manager model:', error);
     throw error;
 });
 
-export { DepartmentPromise as Department };
+export { ManagerPromise as Manager};

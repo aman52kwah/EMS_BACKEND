@@ -12,6 +12,7 @@ async function defineRole() {
         id:{
             type:DataTypes.UUID,
             primaryKey:true,
+            defaultValue:DataTypes.UUIDV4,
         },
         title:{
             type:DataTypes.STRING,
@@ -23,7 +24,8 @@ async function defineRole() {
             allowNull:true,
         },
         level:{
-            type:DataTypes.STRING, // e.g 'junior','senior', 'lead'
+            type:DataTypes.ENUM('junior', 'mid', 'senior', 'lead', 'principal'),
+
             allowNull:false,
         },
         created_at:{
