@@ -25,10 +25,10 @@ async function defineDepartment(){
             type:DataTypes.STRING,
             allowNull:true,
         },
-        // manager_id:{
-        //     type:DataTypes.UUID,
-        //     allowNull:true,// Manager might not be assigned yet
-        // },
+        manager_id:{
+            type:DataTypes.UUID,
+            allowNull:true,// Manager might not be assigned yet
+        },
 
         created_at:{
             type:DataTypes.DATE,

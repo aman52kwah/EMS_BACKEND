@@ -16,10 +16,10 @@ async function defineSalary(){
             type:DataTypes.UUID,
             primaryKey:true,
         },
-        employee_id:{
-            type:DataTypes.UUID,
-            allowNull:false,
-        },
+        // employee_id:{
+        //     type:DataTypes.UUID,
+        //     allowNull:true,
+        // },
         amount:{
             type:DataTypes.DECIMAL(10,2), // for currency( 100.50)
             allowNull:false,
@@ -27,7 +27,7 @@ async function defineSalary(){
         currency: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                defaultValue: 'USD',
+                defaultValue: 'GHA',
             },
         effective_date:{
             type:DataTypes.DATE,

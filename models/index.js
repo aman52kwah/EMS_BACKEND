@@ -42,7 +42,7 @@ Role.hasMany(Employee,{
 
 
 //Employee has many salaries
-Employee.hasMany(Salary,{foreignKey:'employee_id', as:'salaries'});
+Employee.hasOne(Salary,{foreignKey:'employee_id', as:'salaries'});
 Salary.belongsTo(Employee,{foreignKey:'employee_id',as:'employee'})
 
 
