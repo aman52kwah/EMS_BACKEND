@@ -601,6 +601,33 @@ app.post("/api/role", async (req, res) => {
   }
 });
 
+//GET find a specific Role
+app.get("/api/role/:id",async (req,res)=>{
+  try {
+    const {id} = req.params;
+    const role = await Role.findOne({
+      where:{
+        id,
+
+      }
+    });
+      if (!role) {
+      return res.status(404).json({
+        message: "Role not found",
+        isSuccessful: false,
+      });
+    }
+    return res.status(200).json({
+      message: "Role Successfully Retrieved",
+      isSuccessful: true,
+      data: role,
+    });
+  } catch (error) {
+    console.error("Error Fetching Role",error);
+    res.status(500).json({message:"Internal Server Error"});
+  }
+});
+
 //PUT /api/employees/:id/role - Update role
 app.put("/api/employees/:id/role", async (req, res) => {
   try {
@@ -624,8 +651,28 @@ app.put("/api/employees/:id/role", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
-
+  //Delete /api/role/:id Delete a Role by id
+  app.delete("api/role/:id",isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deletedCount = await Role.destroy({
+        where: {
+          id,
+        },
+      });
+      if(deletedCount === 0){
+        res.status(404).json({
+        message: "Role not found or you dont have permission ",
+      });
+      res.status(200).json({
+        message: "Role deleted sucecessfully",
+      });
+      }
+    } catch (error) {
+      console.error("Error deleting Role",error);
+      res.status(500).json({message:"Internal Server Error"})
+    }
+  });
 
 
 //==============================================================================================
