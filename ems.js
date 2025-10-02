@@ -233,7 +233,6 @@ app.get("/api/employees/:id", async (req, res) => {
     const employee = await Employee.findOne({
       where: {
         id,
-        userId: req.employee.id,
       },
     });
 
@@ -259,20 +258,16 @@ app.get("/api/employees/:id", async (req, res) => {
 //POST /api/employees - Add new employee
 app.post("/api/employees", async (req, res) => {
   try {
-    const { name, email, password, department_id, role_id, manager_id } =
+    const {id, name, email,department_id, role_id, status,hire_date } =
       req.body;
-    if (!email || !password || !name) {
-      return res
-        .status(400)
-        .json({ message: "Name, email and password are required" });
-    }
-    const hashedPassword = await bcrypt.hash(password, 10);
     const employee = await Employee.create({
+      id,
+      status,
       name,
       email,
-      password: hashedPassword,
       department_id,
       role_id,
+      hire_date,
     });
     res.status(201).json(employee);
   } catch (error) {
@@ -285,7 +280,7 @@ app.post("/api/employees", async (req, res) => {
 app.put("/api/employees/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, email, password, department_id, role_id } = req.body;
+    const { name, email, hire_date,status, department_id, role_id } = req.body;
     const employee = await Employee.findByPk(id);
     if (!employee) {
       return res.status(404).json({ message: "Employee not found" });
@@ -293,7 +288,9 @@ app.put("/api/employees/:id", async (req, res) => {
     const updates = {};
     if (name) updates.name = name;
     if (email) updates.email = email;
-    if (password) updates.password = await bcrypt.hash(password, 10);
+    //if (password) updates.password = await bcrypt.hash(password, 10);
+    if(hire_date) updates.hire_date = hire_date;
+    if(status) updates.status = status;
     if (department_id) updates.department_id = department_id;
     if (role_id) updates.role_id = role_id;
     //if (manager_id) updates.manager_id = manager_id;
