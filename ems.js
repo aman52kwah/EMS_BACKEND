@@ -429,7 +429,7 @@ app.get("/api/employees/departments/:deptId", async (req, res) => {
 });
 
 // PUT /api/department/:deptId. update department
-app.put("/api/department/:deptId", async (req, res) => {
+app.put("/api/departments/:deptId", async (req, res) => {
   try {
     const { deptId } = req.params;
     const { name, description } = res.body;
@@ -472,7 +472,7 @@ app.put("/api/department/:deptId", async (req, res) => {
 
 //DELETE /api/departments/:deptId Delete Department
 
-app.delete("/api/department/:deptId", isAuthenticated, async (req, res) => {
+app.delete("/api/departments/:deptId", isAuthenticated, async (req, res) => {
   try {
     const { deptId } = req.params;
     //delete delete
